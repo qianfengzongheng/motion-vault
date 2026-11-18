@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "categories": [
+    { "id": "particles", "name": "粒子" },
+    { "id": "light", "name": "光影" },
+    { "id": "typography", "name": "文字" },
+    { "id": "feedback", "name": "交互反馈" },
+    { "id": "transitions", "name": "页面转场" },
+    { "id": "loaders", "name": "加载状态" }
+  ],
+  "useCases": [
+    { "id": "hero", "name": "首屏背景" },
+    { "id": "button", "name": "按钮反馈" },
+    { "id": "transition", "name": "页面切换" },
+    { "id": "loading", "name": "加载状态" },
+    { "id": "reveal", "name": "内容呈现" }
+  ],
+  "effects": [
+    {
+      "id": "particle-form",
+      "name": "粒子聚形",
+      "description": "浅灰颗粒铺满画布，深色点云在右侧绕成一条回环。移动鼠标可以推散附近的颗粒，移开后颗粒慢慢归位。",
+      "category": "particles",
+      "useCases": ["hero", "reveal"],
+      "tags": ["鼠标交互", "背景", "聚形", "回环", "点云", "particle field", "cursor repulsion"],
+      "technology": "Canvas 2D",
+      "dependencies": [],
+      "addedAt": "2026-11-18",
+      "demo": "./?effect=particle-form",
+      "thumbnail": "./effects/particle-form/preview.png",
+      "source": "./effects/particle-form/index.js",
+      "docs": "./effects/particle-form/README.md",
+      "mountExport": "mountParticleForm",
+      "parameters": {
+        "mode": {
+          "label": "构图",
+          "type": "enum",
+          "values": ["form", "field"],
+          "default": "form",
+          "description": "form 聚成轮廓，field 均匀散布。"
+        },
+        "density": {
+          "label": "粒子密度",
+          "type": "number",
+          "default": 0.7,
+          "min": 0.15,
+          "max": 1,
+          "step": 0.05,
+          "unit": "ratio",
+          "description": "当前画布尺寸下的粒子数量比例。"
+        },
+        "speed": {
+          "label": "漂移速度",
+          "type": "number",
+          "default": 1,
+          "min": 0.2,
+          "max": 2,
+          "step": 0.1,
+          "unit": "multiplier",
+          "description": "粒子漂移的时间倍率。"
+        },
+        "pointerRadius": {
+          "label": "鼠标影响范围",
+          "type": "number",
+          "default": 95,
+          "min": 30,
+          "max": 180,
+          "step": 5,
+          "unit": "px",
+          "description": "粒子被指针推开的半径，以 CSS 像素计。"
+        }
+      },
+      "presets": [
+        { "id": "form", "name": "聚形", "options": { "mode": "form", "density": 0.7, "speed": 1, "pointerRadius": 95 } },
+        { "id": "field", "name": "散场", "options": { "mode": "field", "density": 0.5, "speed": 0.6, "pointerRadius": 75 } }
+      ]
+    },
+    {
+      "id": "particle-nebula",
+      "name": "星云旋转",
+      "description": "星尘沿螺旋臂绕亮核旋转，内圈转得比外圈快，背景星点轻微闪烁。",
+      "category": "particles",
+      "useCases": ["hero", "reveal"],
+      "tags": ["星云", "旋转", "螺旋", "星尘", "nebula", "galaxy", "rotation"],
+      "technology": "Canvas 2D",
+      "dependencies": ["./effects/canvas-motion.js"],
+      "addedAt": "2026-11-18",
+      "demo": "./?effect=particle-nebula",
+      "thumbnail": "./effects/particle-nebula/preview.png",
+      "source": "./effects/particle-nebula/index.js",
+      "docs": "./effects/particle-nebula/README.md",
+      "mountExport": "mountParticleNebula",
+      "parameters": {
+        "palette": { "label": "辉光配色", "type": "enum", "values": ["violet", "ice"], "default": "violet", "description": "violet 为紫蓝色，ice 为青蓝色。" },
+        "density": { "label": "星尘密度", "type": "number", "default": 0.8, "min": 0.25, "max": 1, "step": 0.05, "unit": "ratio", "description": "螺旋臂星尘的数量比例。" },
+        "speed": { "label": "旋转速度", "type": "number", "default": 1, "min": 0.2, "max": 2, "step": 0.1, "unit": "multiplier", "description": "旋转的时间倍率。" },
+        "arms": { "label": "旋臂数", "type": "number", "default": 3, "min": 2, "max": 5, "step": 1, "description": "围绕中心展开的螺旋臂数量。" }
+      },
+      "presets": [
+        { "id": "violet", "name": "紫辉三旋", "options": { "palette": "violet", "density": 0.8, "speed": 1, "arms": 3 } },
+        { "id": "ice", "name": "冰蓝双旋", "options": { "palette": "ice", "density": 0.7, "speed": 0.7, "arms": 2 } }
+      ]
+    },
+    {
+      "id": "particle-waterfall",
+      "name": "粒子瀑布",
+      "description": "细长水线从画布顶部加速下坠，在底部溅开水雾和飞沫，水面波纹向外扩散。",
+      "category": "particles",
+      "useCases": ["hero", "reveal"],
+      "tags": ["瀑布", "流动", "水流", "水雾", "飞沫", "waterfall", "flow", "spray"],
+      "technology": "Canvas 2D",
+      "dependencies": ["./effects/canvas-motion.js"],
+      "addedAt": "2026-11-18",
+      "demo": "./?effect=particle-waterfall",
+      "thumbnail": "./effects/particle-waterfall/preview.png",
+      "source": "./effects/particle-waterfall/index.js",
+      "docs": "./effects/particle-waterfall/README.md",
+      "mountExport": "mountParticleWaterfall",
+      "parameters": {
+        "density": { "label": "水线密度", "type": "number", "default": 0.8, "min": 0.25, "max": 1, "step": 0.05, "unit": "ratio", "description": "垂落水线的数量比例。" },
+        "speed": { "label": "流动速度", "type": "number", "default": 1, "min": 0.2, "max": 2, "step": 0.1, "unit": "multiplier", "description": "水线、飞沫和波纹的时间倍率。" },
+        "width": { "label": "瀑布宽度", "type": "number", "default": 0.35, "min": 0.15, "max": 0.65, "step": 0.05, "unit": "ratio", "description": "水流的横向扩展比例，以画布宽度为基准。" },
+        "spray": { "label": "飞沫强度", "type": "number", "default": 0.7, "min": 0, "max": 1, "step": 0.05, "unit": "ratio", "description": "调节底部飞溅的粒子数量和水雾浓度。" }
+      },
+      "presets": [
+        { "id": "cascade", "name": "峡谷细瀑", "options": { "density": 0.8, "speed": 1, "width": 0.35, "spray": 0.7 } },
+        { "id": "veil", "name": "宽幅水帘", "options": { "density": 0.95, "speed": 1.3, "width": 0.55, "spray": 0.9 } }
+      ]
+    }
+  ]
+}
