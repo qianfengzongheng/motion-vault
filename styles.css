@@ -145,14 +145,13 @@ h2 { font-size: 17px; font-weight: 700; }
 .description { max-width: 70ch; margin-top: 6px; }
 .metadata { font-size: 13px; }
 .preview-layout { display: grid; grid-template-columns: minmax(0, 2.55fr) minmax(220px, 1fr); align-items: start; gap: 16px; }
-.preview-canvas, .preview-fallback {
-  display: block;
+.preview-canvas, .preview-fallback { display: block; background: #f4f3ef; }
+.preview-canvas, .preview-fallback, .preview-interactive {
   width: 100%;
   height: auto;
   aspect-ratio: 12 / 5;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #f4f3ef;
 }
 .preview-fallback { object-fit: cover; }
 .parameter-panel { display: grid; gap: 13px; min-width: 0; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }

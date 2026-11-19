@@ -146,11 +146,14 @@ async function renderDetail(effect, expectedRender) {
   let player;
   let presetId = effect.presets[0]?.id ?? "";
   const inputs = [];
-  const canvas = node("canvas", "preview-canvas");
-  canvas.width = 720;
-  canvas.height = 300;
-  canvas.setAttribute("role", "img");
-  canvas.setAttribute("aria-label", effect.name + "的实时画布");
+  const interactive = effect.previewType === "html";
+  const surface = interactive ? node("div", "preview-interactive") : node("canvas", "preview-canvas");
+  if (!interactive) {
+    surface.width = 720;
+    surface.height = 300;
+    surface.setAttribute("role", "img");
+    surface.setAttribute("aria-label", effect.name + "的实时画布");
+  }
   const panel = node("div", "parameter-panel");
   panel.append(node("h2", "", "调试参数"));
 
@@ -191,7 +194,7 @@ async function renderDetail(effect, expectedRender) {
   }
 
   const actions = node("div", "button-row");
-  const playButton = node("button", "button", "播放");
+  const playButton = node("button", "button", interactive ? "启用动效" : "播放");
   playButton.type = "button";
   playButton.disabled = true;
   playButton.addEventListener("click", () => changePlayback(!playing));
@@ -203,14 +206,14 @@ async function renderDetail(effect, expectedRender) {
   const status = node("p", "preview-status", "正在加载预览…");
   status.setAttribute("role", "status");
   const media = node("div");
-  media.append(canvas, status);
+  media.append(surface, status);
   const layout = node("div", "preview-layout");
   layout.append(media, panel);
   preview.replaceChildren(layout);
 
   function changePlayback(value) {
     playing = value;
-    playButton.textContent = playing ? "暂停" : "播放";
+    playButton.textContent = interactive ? (playing ? "暂停动效" : "启用动效") : (playing ? "暂停" : "播放");
     if (playing) player.play();
     else player.pause();
   }
@@ -238,7 +241,7 @@ async function renderDetail(effect, expectedRender) {
   try {
     const module = await import(asset(effect.source).href);
     if (renderId !== expectedRender) return;
-    player = module[effect.mountExport](canvas, options);
+    player = module[effect.mountExport](surface, options);
     visual = player;
     playButton.disabled = false;
     changePlayback(!motionPreference.matches);
@@ -249,7 +252,7 @@ async function renderDetail(effect, expectedRender) {
     player?.destroy();
     visual = undefined;
     playButton.disabled = true;
-    canvas.replaceWith(thumbnail(effect, "preview-fallback"));
+    surface.replaceWith(thumbnail(effect, "preview-fallback"));
     status.textContent = "实时预览加载失败，已显示静态画面。";
   }
 }
