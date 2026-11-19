@@ -1,14 +1,14 @@
 :root {
   color-scheme: light dark;
-  --paper: light-dark(#f7f7ef, #171a14);
-  --surface: light-dark(#fdfdf8, #20241b);
-  --ink: light-dark(#1e2518, #f1f4e7);
-  --muted: light-dark(#565f4c, #b9c2af);
-  --line: light-dark(#d9ddcf, #404737);
-  --soft: light-dark(#edf0e4, #2a3024);
-  --accent: #d8ed81;
-  --accent-ink: #202710;
-  --focus: light-dark(#4b690b, #d8ed81);
+  --paper: light-dark(#f8f6ee, #1c1915);
+  --surface: light-dark(#fffdf7, #26221d);
+  --ink: light-dark(#30291f, #f2ebe0);
+  --muted: light-dark(#62584b, #c7baaa);
+  --line: light-dark(#e1d9c8, #493f33);
+  --soft: light-dark(#f3eee2, #30291e);
+  --accent: light-dark(#f1e8cc, #4b3c25);
+  --accent-ink: light-dark(#483719, #f3e7ce);
+  --focus: light-dark(#795717, #c6a56d);
   --radius: 10px;
   color: var(--ink);
   background: var(--paper);
@@ -77,7 +77,8 @@ button, select, a { -webkit-tap-highlight-color: transparent; }
 .wordmark-symbol { display: block; flex: none; }
 .site-nav { display: flex; align-items: center; gap: 4px; }
 .site-nav a { padding: 7px 10px; border-radius: 7px; }
-.site-nav a:hover, .site-nav a[aria-current="page"] { background: var(--soft); }
+.site-nav a:hover { background: var(--soft); }
+.site-nav a[aria-current="page"] { color: var(--accent-ink); background: var(--accent); }
 .site-main { width: min(100%, 1376px); margin-inline: auto; }
 #startup-status { margin: 30px; color: var(--muted); }
 
