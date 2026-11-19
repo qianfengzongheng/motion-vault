@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="可浏览、试播和复用的网页动效目录。">
     <title>Motion Vault · 动效库</title>
+    <link rel="icon" type="image/svg+xml" href="./icon.svg">
     <link rel="stylesheet" href="./styles.css">
     <script type="module" src="./app.js"></script>
   </head>
@@ -13,9 +14,10 @@
     <header class="site-header">
       <div class="header-inner">
         <a class="wordmark" href="./" data-route="catalog">
-          <span class="wordmark-symbol" aria-hidden="true"></span>
+          <img class="wordmark-symbol" src="./icon.svg" alt="" width="31" height="31">
           Motion Vault
         </a>
+        <p class="header-inscription">留白见意，微动传神</p>
         <nav class="site-nav" aria-label="主导航">
           <a href="./" data-route="catalog">动效库</a>
           <a href="?view=index" data-route="index">AI 索引</a>
@@ -79,13 +81,20 @@
             <h2 id="config-title">当前配置</h2>
             <div class="button-row">
               <a class="button" id="source-link">查看源码</a>
-              <a class="button" id="docs-link">接入文档</a>
+              <a class="button" data-route="docs">接入文档</a>
               <button class="button button-accent" id="copy-config" type="button">复制配置</button>
             </div>
           </div>
           <pre><code id="effect-config"></code></pre>
           <p id="copy-status" role="status"></p>
         </section>
+      </section>
+
+      <section id="docs-view" class="subpage" aria-labelledby="docs-title" hidden>
+        <a class="back-link" data-route="detail"><span aria-hidden="true">←</span> 返回动效</a>
+        <h1 id="docs-title" tabindex="-1"></h1>
+        <p id="docs-status" role="status"></p>
+        <pre id="docs-content" hidden></pre>
       </section>
 
       <section id="index-view" class="subpage" aria-labelledby="index-title" hidden>

@@ -47,23 +47,34 @@ button, select, a { -webkit-tap-highlight-color: transparent; }
   min-height: 70px;
   margin-inline: auto;
   padding: 12px clamp(15px, 3vw, 38px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas: "brand inscription nav";
+  align-items: center;
+  gap: 6px 18px;
+}
+.header-inner > .wordmark { grid-area: brand; justify-self: start; white-space: nowrap; }
+.header-inner > .site-nav { grid-area: nav; justify-self: end; white-space: nowrap; }
+.header-inscription {
+  grid-area: inscription;
+  justify-self: center;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px 18px;
+  gap: clamp(8px, 1vw, 15px);
+  color: color-mix(in srgb, var(--muted) 82%, var(--surface));
+  font: 400 clamp(18px, 2.2vw, 26px)/1.3 "Kaiti SC", "STKaiti", KaiTi, "Noto Serif CJK SC", serif;
+  letter-spacing: .16em;
+  white-space: nowrap;
 }
-.wordmark { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 760; letter-spacing: -.045em; }
-.wordmark-symbol { display: grid; place-items: center; width: 31px; height: 31px; color: var(--accent-ink); background: var(--accent); border-radius: 8px; }
-.wordmark-symbol::before {
+.header-inscription::before, .header-inscription::after {
   content: "";
-  width: 12px;
-  height: 12px;
-  border: 2px solid currentColor;
-  border-top: 0;
-  border-right: 0;
-  transform: translateY(-3px) rotate(-45deg);
+  width: clamp(12px, 2vw, 30px);
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--line));
 }
+.header-inscription::after { transform: scaleX(-1); }
+.wordmark { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 760; letter-spacing: -.045em; }
+.wordmark-symbol { display: block; flex: none; }
 .site-nav { display: flex; align-items: center; gap: 4px; }
 .site-nav a { padding: 7px 10px; border-radius: 7px; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { background: var(--soft); }
@@ -191,6 +202,14 @@ pre {
   .effect-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .preview-layout { grid-template-columns: minmax(0, 1fr); }
   .parameter-panel { max-width: 100%; }
+}
+@media (max-width: 600px) {
+  .header-inner {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "brand nav" "inscription inscription";
+    column-gap: 8px;
+  }
+  .header-inscription { padding-block-end: 2px; }
 }
 @media (max-width: 430px) {
   .wordmark { font-size: 17px; }

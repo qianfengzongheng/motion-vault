@@ -16,6 +16,7 @@ const routeLinks = document.querySelectorAll("a[data-route]");
 const visibleSections = {
   catalog: document.getElementById("catalog"),
   detail: document.getElementById("detail"),
+  docs: document.getElementById("docs-view"),
   index: document.getElementById("index-view"),
   missing: document.getElementById("missing-effect")
 };
@@ -60,9 +61,11 @@ function routeUrl(nextRoute = "catalog", effectId) {
   return browseUrl(base, filters, nextRoute, effectId);
 }
 
-function updateLinks() {
+function updateLinks(effect) {
   for (const link of routeLinks) {
-    link.href = routeUrl(link.dataset.route).href;
+    const destination = link.dataset.route;
+    if (!effect && (destination === "detail" || destination === "docs")) continue;
+    link.href = routeUrl(destination, effect?.id).href;
     if (link.closest(".site-nav")) {
       const active = link.dataset.route === "index" ? route === "index" : route !== "index";
       if (active) link.setAttribute("aria-current", "page");
@@ -137,7 +140,6 @@ async function renderDetail(effect, expectedRender) {
   document.getElementById("effect-meta").textContent = [effect.categoryName, effect.technology].join(" · ");
   document.getElementById("effect-description").textContent = effect.description;
   document.getElementById("source-link").href = asset(effect.source).href;
-  document.getElementById("docs-link").href = asset(effect.docs).href;
   copyStatus.textContent = "";
 
   const defaults = defaultOptions(effect);
@@ -257,12 +259,38 @@ async function renderDetail(effect, expectedRender) {
   }
 }
 
+async function renderDocs(effect, expectedRender) {
+  document.getElementById("docs-title").textContent = effect.name + " · 接入文档";
+  const status = document.getElementById("docs-status");
+  const content = document.getElementById("docs-content");
+  status.textContent = "正在加载接入文档…";
+  content.hidden = true;
+  content.textContent = "";
+  try {
+    const response = await fetch(asset(effect.docs));
+    if (!response.ok) throw new Error("Could not read documentation (" + response.status + ")");
+    // Response.text() decodes UTF-8 even when the static server omits a charset.
+    const markdown = await response.text();
+    if (renderId !== expectedRender) return;
+    content.textContent = markdown;
+    content.hidden = false;
+    status.textContent = "";
+  } catch (error) {
+    if (renderId !== expectedRender) return;
+    console.error(error);
+    status.textContent = "接入文档加载失败，请刷新页面重试。";
+  }
+}
+
 function showRoute({ focus = false, restoreCatalog = false } = {}) {
   const url = new URL(location.href);
   const effectId = url.searchParams.get("effect");
   filters = catalog.readFilters(url);
   const effect = catalog.byId.get(effectId);
-  route = effectId ? (effect ? "detail" : "missing") : url.searchParams.get("view") === "index" ? "index" : "catalog";
+  const view = url.searchParams.get("view");
+  if (effect) route = view === "docs" ? "docs" : "detail";
+  else if (effectId || view === "docs") route = "missing";
+  else route = view === "index" ? "index" : "catalog";
   renderId += 1;
   visual?.destroy();
   visual = undefined;
@@ -273,7 +301,8 @@ function showRoute({ focus = false, restoreCatalog = false } = {}) {
     if (filters.page !== catalog.readFilters(url).page) history.replaceState(history.state, "", routeUrl());
   }
   if (route === "detail") void renderDetail(effect, renderId);
-  updateLinks();
+  if (route === "docs") void renderDocs(effect, renderId);
+  updateLinks(effect);
   const heading = visibleSections[route].querySelector("h1");
   document.title = heading.textContent + " · Motion Vault";
   if (!focus) return;

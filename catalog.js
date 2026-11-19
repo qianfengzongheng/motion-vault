@@ -57,6 +57,7 @@ export function browseUrl(base, filters, route = "catalog", effectId) {
   if (category) url.searchParams.set("category", category);
   if (page > 1) url.searchParams.set("page", String(page));
   if (route === "index") url.searchParams.set("view", "index");
-  if (route === "detail") url.searchParams.set("effect", effectId);
+  if (route === "docs") url.searchParams.set("view", "docs");
+  if (route === "detail" || route === "docs") url.searchParams.set("effect", effectId);
   return url;
 }
