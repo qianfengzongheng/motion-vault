@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="可浏览、试播和复用的网页动效目录。">
+    <title>Motion Vault · 动效库</title>
+    <link rel="icon" type="image/svg+xml" href="./icon.svg">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="wordmark" href="./" data-route="catalog">
+          <img class="wordmark-symbol" src="./icon.svg" alt="" width="31" height="31">
+          Motion Vault
+        </a>
+        <p class="header-inscription">留白见意，微动传神</p>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="./" data-route="catalog">动效库</a>
+          <a href="?view=index" data-route="index">AI 索引</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="site-main">
+      <p id="startup-status" role="status">正在读取动效目录…</p>
+
+      <section id="catalog" class="catalog" aria-labelledby="catalog-title" hidden>
+        <aside class="category-sidebar">
+          <h2>分类</h2>
+          <nav id="category-nav" aria-label="动效分类"></nav>
+        </aside>
+
+        <div class="catalog-main">
+          <div class="title-row">
+            <h1 id="catalog-title" tabindex="-1">动效库</h1>
+            <span id="total-count" class="total-count"></span>
+          </div>
+
+          <div class="filter-bar">
+            <label class="search-label">
+              <span class="sr-only">搜索动效</span>
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="search" type="search" placeholder="搜名称、标签或技术" autocomplete="off">
+            </label>
+            <label class="mobile-category">
+              <span class="sr-only">动效分类</span>
+              <select id="category-select"></select>
+            </label>
+          </div>
+
+          <p id="result-count" class="result-count" aria-live="polite"></p>
+          <ul id="effect-list" class="effect-list" aria-label="动效结果"></ul>
+          <div id="empty-state" class="empty-state" hidden>
+            <p>没有匹配的动效</p>
+            <button id="clear-filters" class="button" type="button">清除筛选</button>
+          </div>
+          <nav id="pagination" class="pagination" aria-label="目录分页" hidden>
+            <span id="page-label"></span>
+            <div class="button-row">
+              <button id="previous-page" class="button" type="button">上一页</button>
+              <button id="next-page" class="button" type="button">下一页</button>
+            </div>
+          </nav>
+        </div>
+      </section>
+
+      <section id="detail" class="subpage" aria-labelledby="effect-title" hidden>
+        <a class="back-link" href="./" data-route="catalog"><span aria-hidden="true">←</span> 返回目录</a>
+        <div class="detail-heading">
+          <p id="effect-meta" class="metadata"></p>
+          <h1 id="effect-title" tabindex="-1"></h1>
+          <p id="effect-description" class="description"></p>
+        </div>
+        <div id="effect-preview"></div>
+        <section class="config-section" aria-labelledby="config-title">
+          <div class="config-header">
+            <h2 id="config-title">当前配置</h2>
+            <div class="button-row">
+              <a class="button" id="source-link">查看源码</a>
+              <a class="button" data-route="docs">接入文档</a>
+              <button class="button button-accent" id="copy-config" type="button">复制配置</button>
+            </div>
+          </div>
+          <pre><code id="effect-config"></code></pre>
+          <p id="copy-status" role="status"></p>
+        </section>
+      </section>
+
+      <section id="docs-view" class="subpage" aria-labelledby="docs-title" hidden>
+        <a class="back-link" data-route="detail"><span aria-hidden="true">←</span> 返回动效</a>
+        <h1 id="docs-title" tabindex="-1"></h1>
+        <p id="docs-status" role="status"></p>
+        <pre id="docs-content" hidden></pre>
+      </section>
+
+      <section id="index-view" class="subpage" aria-labelledby="index-title" hidden>
+        <a class="back-link" href="./" data-route="catalog"><span aria-hidden="true">←</span> 返回目录</a>
+        <div class="config-header index-header">
+          <div>
+            <h1 id="index-title" tabindex="-1">AI 索引</h1>
+            <p class="description">按动效 ID 获取源码、接入文档、参数范围与预设。</p>
+          </div>
+          <a class="button button-accent" href="./effects.json">打开 effects.json</a>
+        </div>
+        <pre><code id="index-content"></code></pre>
+      </section>
+
+      <section id="missing-effect" class="subpage" aria-labelledby="missing-title" hidden>
+        <a class="back-link" href="./" data-route="catalog"><span aria-hidden="true">←</span> 返回目录</a>
+        <h1 id="missing-title" tabindex="-1">找不到这个动效</h1>
+      </section>
+    </main>
+  </body>
+</html>
