@@ -9,12 +9,9 @@ const configCode = document.getElementById("effect-config");
 const copyStatus = document.getElementById("copy-status");
 const list = document.getElementById("effect-list");
 const search = document.getElementById("search");
-const useSelect = document.getElementById("use-select");
-const sortSelect = document.getElementById("sort-select");
 const categorySelect = document.getElementById("category-select");
 const previousPage = document.getElementById("previous-page");
 const nextPage = document.getElementById("next-page");
-const layoutButtons = document.querySelectorAll("button[data-layout]");
 const routeLinks = document.querySelectorAll("a[data-route]");
 const visibleSections = {
   catalog: document.getElementById("catalog"),
@@ -56,8 +53,6 @@ function setupCategories(index) {
     categoryNav.append(button);
     categorySelect.append(new Option(name + "（" + count + "）", id));
   }
-  useSelect.append(new Option("使用场景", ""));
-  for (const { id, name } of index.useCases) useSelect.append(new Option(name, id));
   document.getElementById("total-count").textContent = catalog.effects.length + " 个动效";
 }
 
@@ -91,11 +86,7 @@ function renderCatalog() {
   filters.page = page.page;
   if (search.value !== filters.query) search.value = filters.query;
   categorySelect.value = filters.category;
-  useSelect.value = filters.use;
-  sortSelect.value = filters.sort;
   for (const [id, button] of categoryButtons) button.setAttribute("aria-pressed", String(id === filters.category));
-  for (const button of layoutButtons) button.setAttribute("aria-pressed", String(button.dataset.layout === filters.layout));
-  list.dataset.layout = filters.layout;
   const items = page.results.map((effect, position) => {
     const item = node("li");
     const link = node("a", "effect-card");
@@ -106,7 +97,7 @@ function renderCatalog() {
     image.loading = position < 3 ? "eager" : "lazy";
     const copy = node("span", "effect-card-copy");
     const title = node("span", "effect-name", effect.name);
-    const meta = [effect.categoryName, effect.useLabels[0], effect.technology].filter(Boolean).join(" · ");
+    const meta = [effect.categoryName, effect.technology].filter(Boolean).join(" · ");
     copy.append(title, node("span", "effect-card-meta", meta));
     link.append(image, copy);
     item.append(link);
@@ -143,7 +134,7 @@ function defaultOptions(effect) {
 
 async function renderDetail(effect, expectedRender) {
   document.getElementById("effect-title").textContent = effect.name;
-  document.getElementById("effect-meta").textContent = [effect.categoryName, ...effect.useLabels, effect.technology].join(" · ");
+  document.getElementById("effect-meta").textContent = [effect.categoryName, effect.technology].join(" · ");
   document.getElementById("effect-description").textContent = effect.description;
   document.getElementById("source-link").href = asset(effect.source).href;
   document.getElementById("docs-link").href = asset(effect.docs).href;
@@ -292,11 +283,8 @@ function showRoute({ focus = false, restoreCatalog = false } = {}) {
 function bindControls() {
   search.addEventListener("input", () => changeFilters({ query: search.value }));
   categorySelect.addEventListener("change", () => changeFilters({ category: categorySelect.value }));
-  useSelect.addEventListener("change", () => changeFilters({ use: useSelect.value }));
-  sortSelect.addEventListener("change", () => changeFilters({ sort: sortSelect.value }));
-  for (const button of layoutButtons) button.addEventListener("click", () => changeFilters({ layout: button.dataset.layout }));
   document.getElementById("clear-filters").addEventListener("click", () => {
-    changeFilters({ query: "", category: "", use: "" });
+    changeFilters({ query: "", category: "" });
     search.focus();
   });
   previousPage.addEventListener("click", () => changePage(-1));

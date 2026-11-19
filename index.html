@@ -48,25 +48,10 @@
               <span class="sr-only">动效分类</span>
               <select id="category-select"></select>
             </label>
-            <label>
-              <span class="sr-only">使用场景</span>
-              <select id="use-select"></select>
-            </label>
-            <label>
-              <span class="sr-only">排序方式</span>
-              <select id="sort-select">
-                <option value="recent">最近收录</option>
-                <option value="name">按名称排序</option>
-              </select>
-            </label>
-            <div class="segmented" role="group" aria-label="目录布局">
-              <button type="button" data-layout="grid" aria-pressed="true">网格</button>
-              <button type="button" data-layout="list" aria-pressed="false">列表</button>
-            </div>
           </div>
 
           <p id="result-count" class="result-count" aria-live="polite"></p>
-          <ul id="effect-list" class="effect-list" data-layout="grid" aria-label="动效结果"></ul>
+          <ul id="effect-list" class="effect-list" aria-label="动效结果"></ul>
           <div id="empty-state" class="empty-state" hidden>
             <p>没有匹配的动效</p>
             <button id="clear-filters" class="button" type="button">清除筛选</button>
