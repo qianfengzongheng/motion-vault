@@ -173,6 +173,32 @@
         { "id": "workspace", "name": "工作区手感", "options": { "angle": 8, "damping": 15 } },
         { "id": "steady", "name": "稳重回正", "options": { "angle": 5, "damping": 23 } }
       ]
+    },
+    {
+      "id": "timed-reveal",
+      "name": "限时揭幕",
+      "description": "在区域内移动鼠标，纯色幕布围绕标题圆形收拢，照片从右上向左下滑动。鼠标停下后倒计时，移出则立即开始盖回。",
+      "category": "transitions",
+      "useCases": ["reveal"],
+      "tags": ["预览", "悬停", "遮罩", "图片", "限时", "hover", "reveal", "mosaic"],
+      "technology": "CSS · Web Animations",
+      "dependencies": ["./effects/timed-reveal/light-and-materials.webp"],
+      "addedAt": "2026-11-20",
+      "demo": "./?effect=timed-reveal",
+      "thumbnail": "./effects/timed-reveal/preview.png",
+      "source": "./effects/timed-reveal/index.js",
+      "docs": "./effects/timed-reveal/README.md",
+      "mountExport": "mountTimedReveal",
+      "previewType": "html",
+      "parameters": {
+        "duration": { "label": "收拢时长", "type": "number", "default": 420, "min": 150, "max": 1000, "step": 10, "unit": "ms", "description": "色块收拢和盖回各自用时。" },
+        "speed": { "label": "图片漂移速度", "type": "number", "default": 52, "min": 12, "max": 120, "step": 1, "unit": "px/s", "description": "图片沿横向和纵向每秒各自移动的像素数。" },
+        "hold": { "label": "停驻时长", "type": "number", "default": 2500, "min": 600, "max": 6000, "step": 100, "unit": "ms", "description": "收拢后从最后一次移动到开始盖回的等待时长。" }
+      },
+      "presets": [
+        { "id": "standard", "name": "标准揭幕", "options": { "duration": 420, "speed": 52, "hold": 2500 } },
+        { "id": "slow", "name": "从容浏览", "options": { "duration": 600, "speed": 30, "hold": 4200 } }
+      ]
     }
   ]
 }

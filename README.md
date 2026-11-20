@@ -26,7 +26,7 @@ python -m http.server 4173 --bind 127.0.0.1
 
 先从 [effects.json](./effects.json) 的 `effects` 中按 `id`、`tags`、`useCases` 或 `technology` 选择条目，再读取该条目的 `source` 和 `docs`。相对路径均以索引所在目录为基准。`parameters` 记录类型、默认值、范围与单位，`presets` 记录可直接传给实现的选项对象。网页复制出来的 JSON 中，`id` 用于查找实现，`options` 对应用于挂载的参数。
 
-目前收录 [粒子聚形](./effects/particle-form/README.md)、[星云旋转](./effects/particle-nebula/README.md)、[粒子瀑布](./effects/particle-waterfall/README.md)、[日夜主题涟漪](./effects/theme-ripple/README.md)和[阻尼卡片](./effects/damped-card/README.md)。每个动效有自己的演示、参数和两个预设。复用时同时复制 `dependencies` 列出的本地模块，并保留源码与模块之间的相对位置。
+目前收录 [粒子聚形](./effects/particle-form/README.md)、[星云旋转](./effects/particle-nebula/README.md)、[粒子瀑布](./effects/particle-waterfall/README.md)、[日夜主题涟漪](./effects/theme-ripple/README.md)、[阻尼卡片](./effects/damped-card/README.md)和[限时揭幕](./effects/timed-reveal/README.md)。每个动效有自己的演示、参数和两个预设。复用时同时复制 `dependencies` 列出的本地模块，并保留源码与模块之间的相对位置。
 
 ## 欢迎贡献
 
